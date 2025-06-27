@@ -31,7 +31,13 @@ cd ~
 git clone https://github.com/novnc/noVNC.git
 cd noVNC
 git submodule update --init --recursive
-screen -S noVNC -dm ./utils/novnc_proxy --vnc localhost:5901 --listen 6080
+
+# 🔒 Fix Port Setup
+VNC_PORT=5901
+WEB_PORT=6080
+
+echo "📌 Setting fixed ports: VNC=$VNC_PORT, Web=$WEB_PORT"
+screen -S noVNC -dm ./utils/novnc_proxy --vnc localhost:$VNC_PORT --listen $WEB_PORT
 
 echo "🌍 Installing Google Chrome..."
 cd ~
@@ -41,4 +47,4 @@ rm google-chrome-stable_current_amd64.deb
 
 echo "✅ DONE!"
 echo "🔓 VNC password: 123456"
-echo "🌐 Open in your browser: http://<your-vps-ip>:6080/vnc.html"
+echo "🌐 Open in your browser: http://<your-vps-ip>:${WEB_PORT}/vnc.html"
